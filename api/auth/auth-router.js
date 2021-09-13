@@ -65,16 +65,10 @@ router.post(
   }
  */
 
-router.post("/login", checkUsernameExists, async (req, res, next) => {
-  const { username } = req.body;
-  const [existingUser] = await User.findBy({ username });
-  existingUser
-    ? ((req.session.user = existingUser),
-      res.json({
-        status: 200,
-        message: "Welcome sue!",
-      }))
-    : next();
+router.post("/login", checkUsernameExists, (req, res) => {
+  res.status(200).json({
+    message: "Welcome sue!",
+  });
 });
 
 /**
