@@ -66,8 +66,9 @@ router.post(
  */
 
 router.post("/login", checkUsernameExists, (req, res) => {
+  const { username } = req.body;
   res.status(200).json({
-    message: "Welcome sue!",
+    message: `Welcome ${username}!`,
   });
 });
 
@@ -86,6 +87,22 @@ router.post("/login", checkUsernameExists, (req, res) => {
     "message": "no session"
   }
  */
+
+router.get("/logout", (req, res) => {
+  req.session.chocolatechip
+    ? req.session.destroy((err) => {
+        err
+          ? res.json({
+              message: "there appears to be an error",
+            })
+          : res.json({
+              message: "logged out",
+            });
+      })
+    : res.json({
+        message: "no session",
+      });
+});
 
 // Don't forget to add the router to the `exports` object so it can be required in other modules
 
